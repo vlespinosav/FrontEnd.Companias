@@ -1,0 +1,87 @@
+﻿@model IEnumerable<FrontEnd.Companias.Models.Compania>
+
+
+<div class="row">
+
+    <div class="col-sm" style="float:left;">
+        <div>
+            <img src="/Imagenes/weeclaims.PNG" />
+        </div>
+    </div>
+
+
+    <div class="col-sm" style="float:right;">
+        <h2>Registros</h2>
+
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.NombreCompania)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.NombreContacto)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CorreoElectronico)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Telefono)
+                </th>
+            </tr>
+            @if (Model != null)
+
+            {
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NombreCompania)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NombreContacto)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CorreoElectronico)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Telefono)
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td>
+                        <spam>No hay datos para Mostar</spam>
+                    </td>
+                    </tr>
+                    }
+
+            </table>
+        <div class="row">
+            <div class="col text-center">
+                <input type="button" class="btn btn-primary" value="Regresar" onclick="location.href='@Url.Action("GuardarCompania", "Compania" )'" />
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    @section scripts{
+        <script>
+
+    jQuery.ajax({
+        url:: @Url.Action("Compania", "ObtenerCompania"),
+        type: "GET",
+        dataType: "json",
+        contetType: "application/json; charset-utf-8",
+        succes: function(data) {
+            console.log(data);
+        }
+        })
+
+        </script>
+    }
+

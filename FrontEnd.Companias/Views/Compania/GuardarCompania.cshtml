@@ -1,0 +1,182 @@
+﻿@model FrontEnd.Companias.Models.Compania
+
+@{
+    ViewBag.Title = "GuardarCompania";
+}
+
+
+
+
+@using (Html.BeginForm())
+{
+
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <div class="col-sm" style="float:left; width:40px;">
+            <div>
+                <img src="/Imagenes/weeclaims.PNG" />
+            </div>
+        </div>
+
+        <div class="col-sm" style="float: right; width: 60px;">
+            <h2>Registro Persona</h2>
+
+            <div class="form-horizontal">
+                <hr />
+                @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NombreCompania, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.NombreCompania, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.NombreCompania, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NombreContacto, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.NombreContacto, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.NombreContacto, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.CorreoElectronico, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.CorreoElectronico, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.CorreoElectronico, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Telefono, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Telefono, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Telefono, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+
+                    <div class="col-md-10">
+                        @Html.CheckBoxFor(model => model.Aviso)<spam> He leído y acepto el aviso de privasidad/Terminos y condiciones </spam>
+                    </div>
+                    @Html.ValidationMessageFor(model => model.Aviso, "", new { @class = "text-danger" })
+                </div>
+
+
+                <div class=" row">
+                    <div class="col text-center">
+                        <input type="button" class="btn btn-primary" value="Regresar" onclick="location.href='@Url.Action("ObtenerCompania", "Compania" )'" />
+
+                        <input type="submit" value="Continuar" class="btn btn-primary" />
+
+                        @*<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+                        Launch demo modal
+                    </button>*@
+
+                    </div>
+                </div>
+            </div>
+
+            @if(@ViewBag.IsSuccessStatusCode == "True")
+            {
+        <div class="row">
+
+            <p style="color:green">
+                Datos Guardados Correctamente
+            </p>
+      
+        </div>
+            <br />
+
+            <label>NombreCompañia: </label>@ViewBag.NombreCompañia
+            <br />
+            <label>NombreContacto: </label>@ViewBag.NombreContacto
+            <br />
+            <label>CorreoElectronico: </label>@ViewBag.CorreoElectronico
+            <br />
+            <label>Telefono: </label>@ViewBag.Telefono
+
+      
+            }
+            else
+            {
+                <div class="row" style="color:red">
+                    @ViewBag.Mensaje
+                </div>
+            }
+
+
+        </div>
+    </div>
+
+   
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Modal Guardar</h4>
+                </div>
+                <div class="modal-body">
+                    <spam>Datos Guardados Correctamente</spam>
+
+                    <label>NombreCompañia: </label>@ViewBag.NombreCompañia
+                    <br />
+                    <label>NombreCompañia: </label>@ViewBag.NOmbreContactos
+                    <br />
+                    <label>NombreCompañia: </label>@ViewBag.CorreoElectronico
+                    <br />
+                    <label>NombreCompañia: </label>@ViewBag.Telefono
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    }
+
+    @section scripts{
+
+        <script type="text/javascript">
+
+        $(function () {
+            $("#form").submit(function (e) {
+                e.preventDefault();
+
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("GuardarCompania", "Compania")",
+                    data: {
+                        NombreCompania: $("#NombreCompania").val(),
+                        NombreContacto: $("#NombreContacto").val(),
+                        CorreoElectronico: $("#CorreoElectronico").val(),
+                        Telefono: $("#Telefono").val()
+                    },
+                    type: "post"
+                })
+                .done(function (result) {
+                    if (result != null) {
+                    }
+                    else {
+                    }
+                })
+                .fail(function (xhr, status, error) {
+
+                })
+
+                .always(function () {
+
+                });
+            });
+        });
+
+        </script>
+
+       }
+
